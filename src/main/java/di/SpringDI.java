@@ -14,6 +14,7 @@ public class SpringDI {
         ui.print();
         String answer = cl.askStr("Write something ...");
         ui.add(answer);
-        ui.print();
+        StartUI another = context.getBean(StartUI.class);
+        another.getStore().getAll().forEach(System.out::println);
     }
 }

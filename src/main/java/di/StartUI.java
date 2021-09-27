@@ -2,8 +2,10 @@ package di;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
 
 @Component
+@Scope("prototype")
 public class StartUI {
 
     @Autowired
@@ -17,5 +19,9 @@ public class StartUI {
         for (String value : store.getAll()) {
             System.out.println(value);
         }
+    }
+
+    public Store getStore() {
+        return store;
     }
 }

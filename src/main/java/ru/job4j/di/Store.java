@@ -1,4 +1,4 @@
-package di;
+package ru.job4j.di;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,13 +12,24 @@ public class Accident {
     private String text;
     private String address;
 
-    public static Accident of(String name, String text, String address) {
-        Accident accident = new Accident();
-        accident.name = name;
-        accident.text = text;
-        accident.address = address;
-        return accident;
+    public Accident(int id, String name, String text, String address) {
+        this.id = id;
+        this.name = name;
+        this.text = text;
+        this.address = address;
     }
+
+    /**
+     public static Accident of(String name, String text, String address) {
+     Accident accident = new Accident();
+     accident.name = name;
+     accident.text = text;
+     accident.address = address;
+     return accident;
+     }
+     */
+
+
 
     public int getId() {
         return id;

@@ -18,13 +18,8 @@ public class AccidentMem {
         store.put(accident.getId(), accident);
     }
 
-    public boolean add(Accident accident) {
-        boolean flag = false;
-        Accident rsl = store.putIfAbsent(id.incrementAndGet(), accident);
-        if (rsl == null) {
-            flag = true;
-        }
-        return flag;
+    public boolean create(Accident accident) {
+        return store.putIfAbsent(id.incrementAndGet(), accident) == null;
     }
 
     public List<Accident> findAll() {

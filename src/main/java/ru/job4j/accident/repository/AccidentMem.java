@@ -11,15 +11,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AccidentMem {
 
     private final HashMap<Integer, Accident> store = new HashMap<>();
-    private final AtomicInteger id = new AtomicInteger();
+    private final AtomicInteger id = new AtomicInteger(2);
 
     public AccidentMem() {
-        Accident accident = new Accident(id.incrementAndGet(), "name1", "text1", "address1");
+        Accident accident = new Accident("name1", "text1", "address1");
+        int currId = id.incrementAndGet();
+        accident.setId(currId);
         store.put(accident.getId(), accident);
     }
 
     public boolean create(Accident accident) {
-        return store.putIfAbsent(id.incrementAndGet(), accident) == null;
+        int currId = id.incrementAndGet();
+        accident.setId(currId);
+        return store.putIfAbsent(accident.getId(), accident) == null;
     }
 
     public List<Accident> findAll() {
@@ -28,6 +32,15 @@ public class AccidentMem {
             copyOfAccidents.add(el);
         }
         return copyOfAccidents;
+    }
+
+    public void update(Accident accident) {
+        store.replace(accident.getId(), accident);
+
+    }
+
+    public Accident findById(Integer id) {
+        return store.get(id);
     }
 }
 

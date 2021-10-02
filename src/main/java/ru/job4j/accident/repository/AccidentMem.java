@@ -48,11 +48,20 @@ public class AccidentMem {
     }
 
     public AccidentType findAccidentType(int id) {
+        List<AccidentType> types = createAccidentTypes();
+        return types.get(id - 1);
+    }
+
+    public List<AccidentType> getallAccidentType() {
+        return createAccidentTypes();
+    }
+
+    public static List<AccidentType> createAccidentTypes() {
         List<AccidentType> types = new ArrayList<>();
         types.add(AccidentType.of(1, "Две машины"));
         types.add(AccidentType.of(2, "Машина и человек"));
         types.add(AccidentType.of(3, "Машина и велосипед"));
-        return types.get(id - 1);
+        return types;
     }
 
 }

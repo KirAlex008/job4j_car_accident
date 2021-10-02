@@ -20,11 +20,7 @@ public class IndexControl {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("accidents", this.service.getAllAccidents());
-        List<AccidentType> types = new ArrayList<>();
-        types.add(AccidentType.of(1, "Две машины"));
-        types.add(AccidentType.of(2, "Машина и человек"));
-        types.add(AccidentType.of(3, "Машина и велосипед"));
-        model.addAttribute("types", types);
+        model.addAttribute("types", this.service.getAllAccidentTypes());
         return "index";
     }
 }

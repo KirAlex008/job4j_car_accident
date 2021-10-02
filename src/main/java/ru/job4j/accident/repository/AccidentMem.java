@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AccidentMem {
 
     private final HashMap<Integer, Accident> store = new HashMap<>();
-    private final AtomicInteger id = new AtomicInteger(3);
+    private final AtomicInteger id = new AtomicInteger(2);
 
     public AccidentMem() {
         AccidentType type = AccidentType.of(1, "Две машины");

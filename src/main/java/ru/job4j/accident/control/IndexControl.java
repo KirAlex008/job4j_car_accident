@@ -21,6 +21,7 @@ public class IndexControl {
     public String index(Model model) {
         model.addAttribute("accidents", this.service.getAllAccidents());
         model.addAttribute("types", this.service.getAllAccidentTypes());
+        model.addAttribute("rules", this.service.getAllRules());
         return "index";
     }
 }

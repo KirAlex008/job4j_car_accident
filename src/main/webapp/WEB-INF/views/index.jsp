@@ -28,6 +28,7 @@
                 <th scope="col">Description</th>
                 <th scope="col">Address</th>
                 <th scope="col">Type</th>
+                <th scope="col">Rules</th>
             </tr>
             </thead>
             <tbody>
@@ -42,6 +43,13 @@
                 <td><c:out value="${accident.text}"/></td>
                 <td><c:out value="${accident.address}"/></td>
                 <td><c:out value="${accident.type.name}"/></td>
+                <td><c:forEach var="rule" items="${rules}" >
+
+                    <c:if test="${accident.rules.contains(rule)}">
+                        ${rule.name}
+                    </c:if>
+
+                </c:forEach></td>
             </tr>
                 </c:forEach>
             </tbody>

@@ -8,13 +8,17 @@ import ru.job4j.accident.model.Rule;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Repository
 public class AccidentMem {
 
     private final HashMap<Integer, Accident> store = new HashMap<>();
     private final AtomicInteger id = new AtomicInteger(2);
+    private Map<Integer, Rule> rules = new HashMap<>();
+    private Map<Integer, AccidentType> types = new HashMap<>();
 
     public AccidentMem() {
         AccidentType type = AccidentType.of(1, "Две машины");
@@ -23,6 +27,12 @@ public class AccidentMem {
         int currId = id.incrementAndGet();
         accident.setId(currId);
         store.put(accident.getId(), accident);
+        rules.put(1, Rule.of(1, "Статья. 1"));
+        rules.put(2, Rule.of(2, "Статья. 2"));
+        rules.put(3, Rule.of(3, "Статья. 3"));
+        types.put(1, AccidentType.of(1, "Две машины"));
+        types.put(2, AccidentType.of(2, "Машина и человек"));
+        types.put(3, AccidentType.of(3, "Машина и велосипед"));
     }
 
     public boolean create(Accident accident) {
@@ -49,39 +59,29 @@ public class AccidentMem {
     }
 
     public AccidentType findAccidentType(int id) {
-        List<AccidentType> types = createAccidentTypes();
-        return types.get(id - 1);
+        return types.get(id);
     }
 
     public List<AccidentType> getallAccidentType() {
-        return createAccidentTypes();
-    }
-
-    public static List<AccidentType> createAccidentTypes() {
-        List<AccidentType> types = new ArrayList<>();
-        types.add(AccidentType.of(1, "Две машины"));
-        types.add(AccidentType.of(2, "Машина и человек"));
-        types.add(AccidentType.of(3, "Машина и велосипед"));
-        return types;
+        return types.values().stream().collect(Collectors.toList());
     }
 
     public Rule findRUleType(String id) {
         int iId = Integer.parseInt(id);
-        List<Rule> rules = createRules();
-        return rules.get(iId - 1);
+        return rules.get(iId);
     }
 
     public List<Rule> getallRule() {
-        return createRules();
+        return rules.values().stream().collect(Collectors.toList());
     }
 
-    public static List<Rule> createRules() {
-        List<Rule> rules = new ArrayList<>();
-        rules.add(Rule.of(1, "Статья. 1"));
-        rules.add(Rule.of(2, "Статья. 2"));
-        rules.add(Rule.of(3, "Статья. 3"));
+
+    public Map<Integer, Rule> getRules() {
         return rules;
     }
 
+    public Map<Integer, AccidentType> getTypes() {
+        return types;
+    }
 }
 

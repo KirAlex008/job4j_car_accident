@@ -13,16 +13,15 @@ public class Accident {
     private String name;
     private String text;
     private String address;
-    private AccidentType type;
-    private Set<Rule> rules;
 
+    /**
     public Accident(String name, String text, String address) {
         this.name = name;
         this.text = text;
         this.address = address;
     }
+     */
 
-    /**
      public static Accident of(String name, String text, String address) {
      Accident accident = new Accident();
      accident.name = name;
@@ -30,7 +29,6 @@ public class Accident {
      accident.address = address;
      return accident;
      }
-     */
 
     public int getId() {
         return id;
@@ -81,19 +79,4 @@ public class Accident {
         return Objects.hash(id);
     }
 
-    public AccidentType getType() {
-        return type;
-    }
-
-    public void setType(AccidentType type) {
-        this.type = type;
-    }
-
-    public Set<Rule> getRules() {
-        return rules;
-    }
-
-    public void setRules(Set<Rule> rules) {
-        this.rules = rules;
-    }
 }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
+import ru.job4j.accident.repository.AccidentJdbcTemplate;
 import ru.job4j.accident.repository.AccidentMem;
 
 import java.util.ArrayList;
@@ -11,22 +12,14 @@ import java.util.List;
 
 @Service
 public class AccidentService {
-    private AccidentMem serviceStore;
+    private AccidentJdbcTemplate serviceStore;
 
-    public AccidentService(AccidentMem serviceStore) {
+    public AccidentService(AccidentJdbcTemplate serviceStore) {
         this.serviceStore = serviceStore;
     }
 
     public List<Accident> getAllAccidents() {
-        return new ArrayList<>(this.serviceStore.findAll());
-    }
-
-    public List<AccidentType> getAllAccidentTypes() {
-        return new ArrayList<>(this.serviceStore.getallAccidentType());
-    }
-
-    public List<Rule> getAllRules() {
-        return new ArrayList<>(this.serviceStore.getallRule());
+        return new ArrayList<>(this.serviceStore.getAll());
     }
 
 }

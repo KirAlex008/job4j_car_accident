@@ -16,5 +16,4 @@ public interface Store {
     public Rule findRuleById(String id);
     public List<Rule> getAllRule();
     public List<AccidentType> getAllAccidentType();
-    //findAccidentType(id)
 }

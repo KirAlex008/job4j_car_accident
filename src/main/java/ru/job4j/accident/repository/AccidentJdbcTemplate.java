@@ -52,7 +52,8 @@ public class AccidentJdbcTemplate implements Store {
         }, keyHolder);
         for (var el : accident.getRules()) {
             Rule rule = findRuleById(Integer.toString(el.getId()));
-            /**this.jdbc.update(
+            /**
+             * this.jdbc.update(
                     "insert into accident_rule (accident_id, rule_id) values (?, ?)",
                     accident.getId(), rule.getId());
              */

@@ -13,6 +13,9 @@ public class Accident {
     private String name;
     private String text;
     private String address;
+    private AccidentType type;
+    private Set<Rule> rules;
+
 
     /**
     public Accident(String name, String text, String address) {
@@ -22,11 +25,13 @@ public class Accident {
     }
      */
 
-     public static Accident of(String name, String text, String address) {
+     public static Accident of(String name, String text, String address, AccidentType type, Set<Rule> rules) {
      Accident accident = new Accident();
      accident.name = name;
      accident.text = text;
      accident.address = address;
+     accident.type = type;
+     accident.rules = rules;
      return accident;
      }
 
@@ -79,4 +84,19 @@ public class Accident {
         return Objects.hash(id);
     }
 
+    public AccidentType getType() {
+        return type;
+    }
+
+    public void setType(AccidentType type) {
+        this.type = type;
+    }
+
+    public Set<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRules(Set<Rule> rules) {
+        this.rules = rules;
+    }
 }

@@ -27,21 +27,31 @@
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Address</th>
+                <th scope="col">Type</th>
+                <th scope="col">Rules</th>
             </tr>
             </thead>
             <tbody>
-                <c:forEach items="${accidents}" var="accident">
-            <tr>
-                <td>
-                    <a href='<c:url value="/edit?id=${accident.id}"/>'>
-                        <i class="fa fa-edit mr-3"></i>
-                    </a>
-                    <c:out value="${accident.id}"/></td>
-                <td><c:out value="${accident.name}"/></td>
-                <td><c:out value="${accident.text}"/></td>
-                <td><c:out value="${accident.address}"/></td>
-            </tr>
-                </c:forEach>
+            <c:forEach items="${accidents}" var="accident">
+                <tr>
+                    <td>
+                        <a href='<c:url value="/edit?id=${accident.id}"/>'>
+                            <i class="fa fa-edit mr-3"></i>
+                        </a>
+                        <c:out value="${accident.id}"/></td>
+                    <td><c:out value="${accident.name}"/></td>
+                    <td><c:out value="${accident.text}"/></td>
+                    <td><c:out value="${accident.address}"/></td>
+                    <td><c:out value="${accident.type.name}"/></td>
+                    <td><c:forEach var="rule" items="${accident.rules}" >
+
+                        <c:if test="${accident.rules.contains(rule)}">
+                            ${rule.name}
+                        </c:if>
+
+                    </c:forEach></td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

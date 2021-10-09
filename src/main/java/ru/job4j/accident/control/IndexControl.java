@@ -7,6 +7,7 @@ import ru.job4j.accident.repository.AccidentJdbcTemplate;
 
 @Controller
 public class IndexControl {
+
     private final AccidentJdbcTemplate accidents;
 
     public IndexControl(AccidentJdbcTemplate accidents) {
@@ -16,6 +17,8 @@ public class IndexControl {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("accidents", accidents.getAll());
+        model.addAttribute("types", accidents.getAllAccidentType());
+        model.addAttribute("rules", accidents.getAllRule());
         return "index";
     }
 }

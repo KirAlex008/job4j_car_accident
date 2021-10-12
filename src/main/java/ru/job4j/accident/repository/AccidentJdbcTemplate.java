@@ -96,9 +96,9 @@ public class AccidentJdbcTemplate {
                 accident.getName(),
                 accident.getText(),
                 accident.getAddress(),
-                //accident.getType().getId(),
+                accident.getType().getId(),
                 accident.getId());
-       /* for (var el : accident.getRules()) {
+       /** for (var el : accident.getRules()) {
             Rule rule = findRuleById(Integer.toString(el.getId()));
             jdbc.update(
                     "insert into accident_rule (accident_id, rule_id) values (?, ?)",
@@ -115,7 +115,7 @@ public class AccidentJdbcTemplate {
                     accident.setName(resultSet.getString("name"));
                     accident.setText(resultSet.getString("text"));
                     accident.setAddress(resultSet.getString("address"));
-                    //accident.setType(findTypeById(resultSet.getInt("type_id")));
+                    accident.setType(findTypeById(resultSet.getInt("type_id")));
                     return accident;
                 }, id);
         Set<Rule> ruleSet = new HashSet<>();
@@ -124,7 +124,7 @@ public class AccidentJdbcTemplate {
         for (var el : list) {
             ruleSet.add(findRuleById(Integer.toString(el)));
         }
-        //accident1.setRules(ruleSet);
+        accident1.setRules(ruleSet);
         return accident1;
     }
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentJdbcTemplate;
+import ru.job4j.accident.repository.AccidentHibernate;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,17 +18,17 @@ import java.util.Set;
 @Controller
 public class AccidentControl {
 
-    private final AccidentJdbcTemplate accidents;
+    private final AccidentHibernate accidents;
 
-    public AccidentControl(AccidentJdbcTemplate accidents) {
+    public AccidentControl(AccidentHibernate accidents) {
         this.accidents = accidents;
     }
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("types", accidents.getAll());
-        model.addAttribute("rules", accidents.getAllRule());
+        model.addAttribute("accidents", accidents.getAll());
         model.addAttribute("types", accidents.getAllAccidentType());
+        model.addAttribute("rules", accidents.getAllRule());
         return "accident/create";
     }
 
@@ -44,6 +44,7 @@ public class AccidentControl {
     public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int id, HttpServletRequest req) {
         AccidentType type = accidents.findTypeById(id);
         accident.setType(type);
+
         String[] ids = req.getParameterValues("rIds");
         Set<Rule> rules = new HashSet();
         for (String el : ids) {

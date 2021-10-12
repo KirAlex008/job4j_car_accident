@@ -1,13 +1,25 @@
 package ru.job4j.accident.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-
+@Entity
+@Table(name = "rule")
 public class Rule {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "accident_rule",
+            joinColumns = {@JoinColumn(name = "rule_id")},
+            inverseJoinColumns = {@JoinColumn(name = "accident_id")})
+    private Set<Accident> accidents = new HashSet<>();
+
+    public Rule() {
+    }
 
     public static Rule of(int id, String name) {
         Rule rule = new Rule();
@@ -49,4 +61,12 @@ public class Rule {
         return Objects.hash(id);
     }
 
+/**    @Override
+    public String toString() {
+        return "Rule{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", accidents=" + accidents
+                + '}';
+    }*/
 }

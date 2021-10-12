@@ -1,20 +1,42 @@
 package ru.job4j.accident.model;
 
-import java.util.Objects;
-import java.util.Set;
+import org.springframework.stereotype.Component;
 
+import java.util.*;
+import javax.persistence.*;
+import java.util.Objects;
+
+import static javax.persistence.CascadeType.ALL;
 
 /**
  * В заявлении указывает: адрес, номер машины, описание нарушения и фотографию нарушения.
  */
-
+@Component
+@Entity
+@Table(name = "accident")
 public class Accident {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String text;
     private String address;
+    @ManyToOne(cascade = ALL)
+    @JoinColumn(name = "type_id")
+
     private AccidentType type;
-    private Set<Rule> rules;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "accident_rule",
+            joinColumns = {@JoinColumn(name = "accident_id")},
+            inverseJoinColumns = {@JoinColumn(name = "rule_id")})
+    private Set<Rule> rules = new HashSet<>();
+
+    public Accident() {
+    }
+
+    public void addRule(Rule rule) {
+        this.rules.add(rule);
+    }
 
 
     /**
@@ -25,13 +47,13 @@ public class Accident {
     }
      */
 
-     public static Accident of(String name, String text, String address, AccidentType type, Set<Rule> rules) {
+     public static Accident of(String name, String text, String address, AccidentType type) {
      Accident accident = new Accident();
      accident.name = name;
      accident.text = text;
      accident.address = address;
      accident.type = type;
-     accident.rules = rules;
+
      return accident;
      }
 
@@ -98,5 +120,17 @@ public class Accident {
 
     public void setRules(Set<Rule> rules) {
         this.rules = rules;
+    }
+
+    @Override
+    public String toString() {
+        return "Accident{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", text='" + text + '\''
+                + ", address='" + address + '\''
+                + ", type=" + type
+                + ", rules=" + rules
+                + '}';
     }
 }

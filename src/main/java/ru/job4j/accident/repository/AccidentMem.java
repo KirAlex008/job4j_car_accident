@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Repository
-public class AccidentMem implements Store {
+public class AccidentMem {
 
     private final HashMap<Integer, Accident> store = new HashMap<>();
     private final AtomicInteger id = new AtomicInteger(2);
@@ -41,7 +41,7 @@ public class AccidentMem implements Store {
         types.put(3, AccidentType.of(3, "Машина и велосипед"));
     }
 
-    @Override
+
     public Accident save(Accident accident) {
         int currId = id.incrementAndGet();
         accident.setId(currId);
@@ -49,7 +49,8 @@ public class AccidentMem implements Store {
         return accident;
     }
 
-    @Override
+
+
     public List<Accident> getAll() {
         List<Accident> copyOfAccidents = new ArrayList<>();
         for (var el : store.values()) {
@@ -58,38 +59,37 @@ public class AccidentMem implements Store {
         return copyOfAccidents;
     }
 
-    @Override
+
     public void update(Accident accident) {
         store.replace(accident.getId(), accident);
     }
 
-    @Override
+
     public Accident findAccidentById(Integer id) {
         return null;
     }
 
 
-    @Override
+
     public void delete(Accident accident) {
 
     }
 
-    @Override
     public AccidentType findTypeById(Integer id) {
         return null;
     }
 
-    @Override
+
     public Rule findRuleById(String id) {
         return null;
     }
 
-    @Override
+
     public List<Rule> getAllRule() {
         return null;
     }
 
-    @Override
+
     public List<AccidentType> getAllAccidentType() {
         return null;
     }

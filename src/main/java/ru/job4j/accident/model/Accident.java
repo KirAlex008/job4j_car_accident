@@ -21,11 +21,11 @@ public class Accident {
     private String name;
     private String text;
     private String address;
-    @ManyToOne(cascade = ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "type_id")
 
     private AccidentType type;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "accident_rule",
             joinColumns = {@JoinColumn(name = "accident_id")},
             inverseJoinColumns = {@JoinColumn(name = "rule_id")})
@@ -107,7 +107,8 @@ public class Accident {
     }
 
     public AccidentType getType() {
-        return type;
+
+         return type;
     }
 
     public void setType(AccidentType type) {

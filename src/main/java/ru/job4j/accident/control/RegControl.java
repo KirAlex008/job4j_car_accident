@@ -2,13 +2,16 @@ package ru.job4j.accident.control;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.User;
 import ru.job4j.accident.repository.AuthorityRepository;
 import ru.job4j.accident.repository.UserRepository;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 public class RegControl {
@@ -24,12 +27,20 @@ public class RegControl {
     }
 
     @PostMapping("/reg")
-    public String save(@ModelAttribute User user) {
-        user.setEnabled(true);
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setAuthority(authorities.findByAuthority("ROLE_USER"));
-        users.save(user);
-        return "redirect:/login";
+    public String save(@ModelAttribute User user, HttpServletRequest req) {
+        Optional<User> usersExistence = users.findByUsername(user.getUsername());
+        if (usersExistence.isPresent()) {
+            HttpSession sc = req.getSession();
+            String errorMessage = "Try another user name, this name is taken !!";
+            sc.setAttribute("errorMessageReg", errorMessage);
+            return "redirect:/reg";
+        } else {
+            user.setEnabled(true);
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setAuthority(authorities.findByAuthority("ROLE_USER"));
+            users.save(user);
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/reg")
